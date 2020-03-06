@@ -590,8 +590,12 @@ namespace Skoruba.IdentityServer4.STS.Identity.Controllers
 
             AddErrors(result);
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            //Has an error when returns to view WithoutUsername.
+            if (_loginConfiguration.ResolutionPolicy == LoginResolutionPolicy.Username)
+				// If we got this far, something failed, redisplay form
+				return View(model);
+			else
+				return View("RegisterWithoutUsername", new RegisterWithoutUsernameViewModel { Email = model.Email });
         }
 
         [HttpPost]
